@@ -1,39 +1,37 @@
-version : '3'
+version: '3'
 
-services :
-  db :
-    container_name: my-db
+services:
+  db:
+    container_name: 'glf-postgres'
+    image: 'postgres:latest'
     ports:
       - 54321:5432
     environment:
-      - POSTGRES_USER=jgjzvs
-      - POSTGRES_PASSWORD=011245
-    image: postgres:14.4
-    restart: unless-stopped
-
-  pgadmin :
-    container_name : pg-admin
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    restart: 'unless-stopped'
+    
+  pgadmin:
+    container_name: 'glf-pgadmin'
+    image: 'dpage/pgadmin4:latest'
     ports:
-      - 4433:443
       - 8080:80
-    environment :
-      - PGADMIN_DEFAULT_EMAIL=jgjzvs@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=011245
-    image : dpage/pgadmin4:latest
-    restart : unless-stopped
-
-  strapi :
-    container_name : my-app
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PG_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PG_PASS}
+    restart: 'unless-stopped'
+  
+  strapi:
+    container_name: 'glf-strapi'
+    image: 'naskio/strapi:latest'
     ports:
       - 1337:1337
-    environment :
-      - name=value
-      - DATABASE_CLIENT=postgres
-      - DATABASE_PORT=54321
-      - DATABASE_NAME=jgjzvs
-      - DATABASE_HOST=192.168.1.105
-      - DATABASE_USERNAME=jgjzvs
-      - DATABASE_PASSWORD=011245
-      - DATABASE_SSL=false
-    image: 'naskio/strapi:latest'  
-    restart: 'unless-stopped' 
+    environment:
+      - DATABASE_CLIENT=${STRAPI_CLIENT}
+      - DATABASE_HOST=${STRAPI_HOST}
+      - DATABASE_PORT=${STRAPI_PORT}
+      - DATABASE_NAME=${STRAPI_NAME}
+      - DATABASE_USERNAME=${STRAPI_USERNAME}
+      - DATABASE_PASSWORD=${STRAPI_PASSWORD}
+      - DATABASE_SSL=${STRAPI_SSL}
+    restart: 'unless-stopped'
