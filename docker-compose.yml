@@ -2,36 +2,35 @@ version: '3'
 
 services:
   db:
-    container_name: 'glf-postgres'
-    image: 'postgres:latest'
+    container_name: jgjzvs-postgres
+    image: postgres:latest
     ports:
-      - 54321:5432
+      - 54322:5432
     environment:
-      - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
-    restart: 'unless-stopped'
-    
+      - POSTGRES_USER=${DB_USER}
+    restart: unless-stopped
   pgadmin:
-    container_name: 'glf-pgadmin'
-    image: 'dpage/pgadmin4:latest'
+    container_name: jgjzvs-pgadmin
+    image: dpage/pgadmin4:latest
     ports:
       - 8080:80
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PG_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PG_PASS}
-    restart: 'unless-stopped'
-  
+    restart: unless-stopped
   strapi:
-    container_name: 'glf-strapi'
-    image: 'naskio/strapi:latest'
+    container_name: jgjzvs-strapi
+    image: naskio/strapi:latest
     ports:
       - 1337:1337
     environment:
-      - DATABASE_CLIENT=${STRAPI_CLIENT}
-      - DATABASE_HOST=${STRAPI_HOST}
-      - DATABASE_PORT=${STRAPI_PORT}
-      - DATABASE_NAME=${STRAPI_NAME}
-      - DATABASE_USERNAME=${STRAPI_USERNAME}
-      - DATABASE_PASSWORD=${STRAPI_PASSWORD}
-      - DATABASE_SSL=${STRAPI_SSL}
-    restart: 'unless-stopped'
+      - DATABASE_CLIENT=${DB_CLIENT}
+      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_PORT=${DB_PORT}
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USERNAME=${DB_USERNAME}
+      - DATABASE_PASSWORD=${DB_PASSWORD}
+      - DATABASE_SSL=${DB_SSL}
+  restart: unless-stopped
+  
