@@ -2,7 +2,7 @@ version : '3'
 
 services :
   db :
-    container_name: my-db
+    container_name: jgzjvs-postgres
     ports:
       - 54321:5432
     environment:
@@ -12,7 +12,7 @@ services :
     restart: unless-stopped
 
   pgadmin :
-    container_name : pg-admin
+    container_name : jgzjvs-pgadmin
     ports:
       - 4433:443
       - 8080:80
@@ -23,7 +23,7 @@ services :
     restart : unless-stopped
 
   strapi :
-    container_name : my-app
+    container_name : jgjzvs-myapp
     ports:
       - 1337:1337
     environment :
